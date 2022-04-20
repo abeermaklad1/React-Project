@@ -1,13 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+import promiseMW from 'redux-promise';
+import rootReducer from '../src/Redux/reducers/index';
+
+import { BrowserRouter } from "react-router-dom";
+
+// <Provider store={myStore}></Provider>
+//const myStore = createStore(rootReducer);
+
+const myStore = applyMiddleware(promiseMW)(createStore)
 
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter>
+  <Provider store={myStore(rootReducer)}>
+    <React.StrictMode>
     <App />
-  </React.StrictMode>,
+    </React.StrictMode>
+  </Provider>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
